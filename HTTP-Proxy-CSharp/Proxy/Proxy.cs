@@ -40,7 +40,8 @@ namespace Proxy
             byte[] requestBuffer = new byte[1];
             byte[] responseBuffer = new byte[1];
 
-            requestLines.Clear();   // Clear lines from the previous request
+            // Clear lines from the previous request
+            requestLines.Clear();
 
             try
             {
@@ -63,12 +64,19 @@ namespace Proxy
                         requestTempLine = "";
                     }
 
+                    /*
+                    If the received request from the client
+                    is two end of line statements then the loop
+                    should be broken to continue sending the
+                    request to the web server.
+                    */
                     if (requestPayload.EndsWith(EOL + EOL))
                     {
                         receiveRequest = false;
                     }
                 }
 
+                // Used for testing purposes only.
                 Console.WriteLine("Raw request received...");
                 Console.WriteLine(requestPayload);
 
@@ -113,7 +121,8 @@ namespace Proxy
 
         private string GetUrl(String payload)
         {
-            String[] tokens = payload.Split(' ');   // Split the requestPayload and get the url (second token item)
+            // Split the requestPayload and get the url (second token item).
+            String[] tokens = payload.Split(' ');
             return tokens[1];
         }
     }
